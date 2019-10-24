@@ -777,6 +777,7 @@ GameObject:
   - component: {fileID: 1262997413}
   - component: {fileID: 1262997416}
   - component: {fileID: 1262997417}
+  - component: {fileID: 1262997418}
   m_Layer: 0
   m_Name: "\u72D0\u72F8"
   m_TagString: Untagged
@@ -896,6 +897,21 @@ CapsuleCollider2D:
   m_Offset: {x: -0.05, y: -0.35}
   m_Size: {x: 0.85, y: 1.3}
   m_Direction: 0
+--- !u!114 &1262997418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1262997412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28d053868b701964ea6134b7d8bacc7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  jump: 2.5
+  foxName: "\u72D0\u72F8"
+  pass: 0
 --- !u!1 &1685565214
 GameObject:
   m_ObjectHideFlags: 0
