@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;   // 引用 系統.集合 API
 
 public class LearnArrayFor : MonoBehaviour
 {
-    public string say = "嗨，你好嗎?";
+    public string say = "嗨，你好嗎？";
 
     // 類型 陣列[] = new 類型[數量]
     public float[] values = new float[7];
@@ -34,26 +35,26 @@ public class LearnArrayFor : MonoBehaviour
             //print("分數陣列：" + scores[i]);
         }
 
-        StartCoroutine(Test()); 
+        //StartCoroutine(Test()); // 啟動協程
+        StartCoroutine(Print());
     }
 
     // 協同程序
     private IEnumerator Test()
     {
         print("開始!");
+        yield return new WaitForSeconds(1);
+        print("<color=red>一秒後~</color>");
         yield return new WaitForSeconds(2);
         print("<color=red>兩秒後~</color>");
-        yield return new WaitForSeconds(3);
-        print("<color=red>三秒後~</color>");
-
     }
 
-    private IEnmerator printer()
+    private IEnumerator Print()
     {
-        for(int i =0;i < say.Length: i++)
+        for (int i = 0; i < say.Length; i++)
         {
-            print(say{ i});
-            yield return new waitForSeconds(0.3f);
+            print("<color=blue>" + say[i] + "</color>");
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

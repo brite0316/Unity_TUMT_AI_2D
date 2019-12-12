@@ -39,6 +39,15 @@ public class NewBehaviourScript : MonoBehaviour
          Debug.Log("碰到東西" + collision.gameObject); 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "鑽石")
+        {
+            Destroy(collision.gameObject);
+
+        }
+    }
+
     /// <summary>
     /// 走路
     ///  </summary>

@@ -1,7 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;   // 引用 介面 API
+﻿
+using UnityEngine;
+using UnityEngine.UI;       // 引用 介面 API
+using System.Collections;
 
-public class Npc : MonoBehaviour
+public class Fox : MonoBehaviour
 {
     #region 欄位
     // 定義列舉
@@ -9,18 +11,19 @@ public class Npc : MonoBehaviour
     public enum state
     {
         // 一般、尚未完成、完成
-        normal, notComplete, complete
+        start, notComplete, complete
     }
     // 使用列舉
     // 修飾詞 類型 名稱
     public state _state;
 
     [Header("對話")]
-    public string sayStart = "嗨，你好，我可以請你幫我蒐集十顆櫻桃嗎？";
-    public string sayNotComplete = "你還沒找到十顆櫻桃喔...";
-    public string sayComplete = "感謝你幫我找到十顆櫻桃~";
-    [Header("對話速度")]
+    public string sayStart = "嗨!!!我要蒐集十顆櫻桃!!!";
+    public string sayNotComplete = "還沒找到十顆櫻桃嗎!!!";
+    public string sayComplete = "感謝找到櫻桃!!!";
+    [Range(0.1f, 1.5f)]
     public float speed = 1.5f;
+    public AudioClip soundSay;
     [Header("任務相關")]
     public bool complete;
     public int countPlayer;
@@ -28,7 +31,14 @@ public class Npc : MonoBehaviour
     [Header("介面")]
     public GameObject objCanvas;
     public Text textSay;
+
+    private AudioSource aud;
     #endregion
+
+    private void Start()
+    {
+        aud = GetComponent<AudioSource>();
+    }
 
     // 2D 觸發事件
     private void OnTriggerEnter2D(Collider2D collision)
@@ -51,19 +61,36 @@ public class Npc : MonoBehaviour
     {
         // 畫布.顯示
         objCanvas.SetActive(true);
+        StopAllCoroutines();
+
+        if (countPlayer >= countFinish) _state = state.complete;
+
 
         // 判斷式(狀態)
         switch (_state)
         {
-            case state.normal:
-                textSay.text = sayStart;            // 開始對話
+            case state.start:
+                StartCoroutine(ShowDialog(sayStart));           // 開始對話
+                _state = state.notComplete;
                 break;
             case state.notComplete:
-                textSay.text = sayNotComplete;      // 未完成對話
+                StartCoroutine(ShowDialog(sayNotComplete));     // 開始對話未完成
                 break;
             case state.complete:
-                textSay.text = sayComplete;         // 完成對話
+                StartCoroutine(ShowDialog(sayComplete));        // 開始對話完成
                 break;
+        }
+    }
+
+    private IEnumerator ShowDialog(string say)
+    {
+        textSay.text = "";                              // 清空文字
+
+        for (int i = 0; i < say.Length; i++)            // 迴圈跑對話.長度
+        {
+            textSay.text += say[i].ToString();          // 累加每個文字
+            aud.PlayOneShot(soundSay, 0.6f);            // 播放一次音效(音效片段，音量)
+            yield return new WaitForSeconds(speed);     // 等待
         }
     }
 
@@ -72,6 +99,15 @@ public class Npc : MonoBehaviour
     /// </summary>
     private void SayClose()
     {
+        StopAllCoroutines();
         objCanvas.SetActive(false);
+    }
+
+    /// <summary>
+    /// 玩家取得道具
+    /// </summary>
+    public void PlayerGet()
+    {
+        countPlayer++;
     }
 }
