@@ -31,6 +31,8 @@ public class Fox : MonoBehaviour
     [Header("介面")]
     public GameObject objCanvas;
     public Text textSay;
+    [Header("血量"), Range(0, 200)]
+    public float hp = 100;
 
     private AudioSource aud;
     #endregion
@@ -110,4 +112,10 @@ public class Fox : MonoBehaviour
     {
         countPlayer++;
     }
+
+    public void Damage(float damage)
+    {
+        hp -= damage;
+    }
+    
 }
