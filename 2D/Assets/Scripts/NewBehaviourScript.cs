@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine; 
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -10,14 +10,25 @@ public class NewBehaviourScript : MonoBehaviour
     public bool pass = false;
     public bool isGround = false;
 
+    public float hp = 100;
+
+    private float hpMax;
+    public Image hpBar;
+    public GameObject final;
+
     private Rigidbody2D r2d;
     private Transform tra;
+
+
+
 
 
     private void Start()
     {
         r2d = GetComponent<Rigidbody2D>();
         tra = GetComponent<Transform>();
+
+        hpMax = hp;
     }
 
     private void Update()
@@ -77,6 +88,15 @@ public class NewBehaviourScript : MonoBehaviour
     private void Turn(int direction)
     {
         transform.eulerAngles = new Vector3(0, direction, 0);
+    }
+
+
+    public void Damage(float damage)
+    {
+        hp -= damage;
+        hpBar.fillAmount = hp / hpMax;
+
+        if (hp <= 0) final.SetActive(true);
     }
 }
 

@@ -113,9 +113,5 @@ public class Fox : MonoBehaviour
         countPlayer++;
     }
 
-    public void Damage(float damage)
-    {
-        hp -= damage;
-    }
     
 }
